@@ -42,3 +42,26 @@ function honey_pot_middleware(string $value): bool
     }
     return false;
 };
+
+/**
+     * Cette fonction protège le serveur contre les attaques de type XSS.
+     * 
+     * Elle se charge de rendre au propre toutes les données provenant du formulaire.
+     *
+     * @param array $data
+     * 
+     * @return array
+     */
+    function xss_protection(array $data) : array
+    {
+        $tab = [];
+
+        foreach ($data as $key => $value) 
+        {
+            $tab[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        }
+
+        return $tab;
+    };
+
+ 
