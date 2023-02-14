@@ -35,7 +35,7 @@ function csrf_middleware(string $form_token, string $system_token): bool
  * @param string $value
  * @return boolean
  */
-function honet_pot_middleware(string $value): bool
+function honey_pot_middleware(string $value): bool
 {
     if (!isset($value) || !empty($value)) {
         return true;

@@ -24,15 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     unset($_SESSION['create_form_csrf_token']);
 
+
     //Protegeons le serveur contre les robots spameurs : https://nordvpn.com/fr/blog/honeypot-informatique/
     // Si le pot de miel a détecter un robot, 
-    // On redirige automatiquement l'utilisateur vers la page de laquelle proviennent les informations
-    // Puis, on arrête l'exécution du script
-
-    if ( honet_pot_middleware($_POST['create_form_csrf_token'])){
-return header ("Location: ". $_SERVER['HTTP_REFERER']);
-
+    if (honey_pot_middleware($_POST['create_form_honey_pot'])) {
+        // On redirige automatiquement l'utilisateur vers la page de laquelle proviennent les informations
+        // Puis, on arrête l'exécution du script
+        return header("Location: " . $_SERVER['HTTP_REFERER']);
     }
+    var_dump("On peut continuer");
+    die();
 }
 $_SESSION['create_form_csrf_token'] = bin2hex(random_bytes(40));
 ?>
@@ -97,7 +98,7 @@ require __DIR__ . "/partials/nav.php";
                     </div>
 
                     <div class="mb-3 d-none">
-                        <input type="hidden" name="create_form_csrf_token" value="<?php $_SESSION['create_form_csrf_token'] ?>">
+                        <input type="hidden" name="create_form_csrf_token" value="<?= $_SESSION['create_form_csrf_token'] ?>">
                     </div>
 
                     <div class="mb-3 d-none">
