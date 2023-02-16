@@ -151,6 +151,8 @@
         // $req->fetch();
 
         $row = $req->rowCount();
+        $req->closeCursor();
+        
 
         if ($row == 0) 
         {
