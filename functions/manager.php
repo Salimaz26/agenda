@@ -22,7 +22,7 @@ function create_contact(array $data): void
     $req->bindValue(":first_name", $data['first_name']);
     $req->bindValue(":last_name",  $data['last_name']);
     $req->bindValue(":email",      $data['email']);
-    $req->bindValue(":age",        $data['age']? $data['age'] : NULL);
+    $req->bindValue(":age",        $data['age'] ? $data['age'] : NULL);
     $req->bindValue(":phone",      $data['phone']);
     $req->bindValue(":comment",    $data['comment']);
 
@@ -31,4 +31,21 @@ function create_contact(array $data): void
 
     //Fermons la connexion établie avec la BDD
     $req->closeCursor();
+}
+
+
+
+/**
+ * Cette fonction permet de récupérer tous les contacts
+ *
+ * @return array
+ */
+function find_all_contacts(): array
+{
+    require __DIR__ . "/../db/connexion.php";
+    $req = $db->prepare("SELECT * FROM contact");
+    $req->execute();
+    $data = $req->fetchAll();
+    $req->closeCursor();
+    return $data;
 }
